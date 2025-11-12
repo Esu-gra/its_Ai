@@ -106,21 +106,33 @@ print("******************"+"\n")
 ### Task:Conta quanti album appartengono a ogni genere unico (dividendo generi combinati come "pop, rock")
 ### Soluzione:  
 print("***ESERCIZIO 11***")
-
+df11=pd.read_csv(csv_path)
+generi_divisi=df11["Genre"].str.split(",")
+generi_divisi = df11["Genre"].str.split(",").explode().str.strip().str.lower()
+print( generi_divisi.value_counts())
 print("******************"+"\n")
 
 ### Esercizio 12: Trova l'album con la maggior differenza tra vendite e vendite dichiarate
 ### Task: Identifica l'album con la maggiore differenza tra 'Claimed Sales' e 'Music Recording Sales' e visualizza i suoi dettagli
 ### Soluzione:  
 print("***ESERCIZIO 12***")
+df12=pd.read_csv(csv_path)
+df12["differenza_prezzo"]=(df12["Claimed Sales (millions)"]-df12["Music Recording Sales (millions)"])
+max_diff=df12["differenza_prezzo"].max()
+album=df12[df12["differenza_prezzo"]==max_diff] 
 
+print("differenza massima:",max_diff)
+print("Album con la maggior differenza:")
+print(album[["Artist","Album","differenza_prezzo"]])
 print("******************"+"\n")
   
 ### Esercizio 13: Filtra gli album per generi multipli
 ### Task: Crea un nuovo DataFrame contenente gli album che includono entrambi "rock" e "pop" nella colonna 'Genre'
 ### Soluzione:**  
 print("***ESERCIZIO 13***")
-
+df13=pd.read_csv(csv_path)
+condizione=df13["Genre"].str.contains("pop") & df13["Genre"].str.contains("rock")
+print(df13[condizione])
 print("******************"+"\n")
 
 ### NON FARE    
