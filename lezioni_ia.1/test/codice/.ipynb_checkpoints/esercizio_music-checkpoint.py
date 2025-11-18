@@ -6,7 +6,8 @@ import pandas as pd
 print("***ESERCIZIO 1***")
 csv_path="../dati/SomeMusicAlbums(1).csv"
 df=pd.read_csv(csv_path)
-print(df.head(3)) #leggi le prime 3 righe con head(di base proietta i primi 5 elem)
+
+print(df.head(3))
 print("*****************"+"\n")    
  
 ### Esercizio 2: Mostra informazioni di base sul DataFrame 
@@ -41,7 +42,6 @@ print(df4[cond][["Artist","Album","Released"]])
 
 print("*****************"+"\n")
 
-
 ### Esercizio 5: Calcola la media delle valutazioni
 ### Task: Calcola la media della colonna 'Rating' per tutti gli album
 ### Soluzione:
@@ -57,16 +57,10 @@ print("*****************"+"\n")
 ### Task: Identifica l'album con la durata massima e minima nella colonna 'Length' e visualizza i suoi dettagli
 ### Soluzione:
 print("***ESERCIZIO 6***")
-df6 = pd.read_csv(csv_path)
-massimo = df6["Length"].max()
-minimo = df6["Length"].min()
-
-print("Durata massima:", massimo)
-print("Durata minima:", minimo)
-print("\nAlbum con durata massima:")
-print(df6[df6["Length"] == massimo])
-print("\nAlbum con durata minima:")
-print(df6[df6["Length"] == minimo])
+df6=pd.read_csv(csv_path)
+massimo=df6["Length"].max()
+min=df6["Length"].min()
+print(massimo)
 print("*****************"+"\n")
  
 ### NON FARE
@@ -75,8 +69,6 @@ print("*****************"+"\n")
 ### Soluzione:
 print("***ESERCIZIO 7***")
 df7=pd.read_csv(csv_path)
-generi=df7["Genre"].str.split(", ")
-
 print(df7["Genre"].unique())
 print("*****************"+"\n")
 
@@ -84,12 +76,10 @@ print("*****************"+"\n")
 ### Task: Aggiungi una nuova colonna 'Sales_Difference' che mostri la differenza tra 'Claimed Sales' e 'Music Recording Sales'
 ### Soluzione:
 print("***ESERCIZIO 8***")
-df8 = pd.read_csv(csv_path)
-# Calcolo differenza corretta
-df8["Sales_Difference"] = df8["Claimed Sales (millions)"] - df8["Music Recording Sales (millions)"]
-print("Sales Difference:")
+df8=pd.read_csv(csv_path)
+df8["Sales_Difference"]=(df8["Music Recording Sales (millions)"]-df8['Claimed Sales (millions)'])
 print(df8["Sales_Difference"])
-
+print("*****************"+"\n")
   
 ### Esercizio 9: Trova gli album colonna sonora
 ### Task: Elenca tutti gli album contrassegnati come 'Soundtrack' (dove la colonna è "Y")
@@ -97,7 +87,7 @@ print(df8["Sales_Difference"])
 print("***ESERCIZIO 9***")
 df9=pd.read_csv(csv_path)
 cond=df9[df9["Soundtrack"]=="Y"]
-print(cond[["Album","Artist"]])
+print(cond)
 print("*****************"+"\n")
 
 ### Esercizio 10: Salva i dati filtrati in un file CSV
@@ -150,21 +140,6 @@ print("******************"+"\n")
 ### Task: Calcola la media della durata (in minuti) degli album per ogni genere (dividendo generi combinati)
 ### Soluzione:  
 print("***ESERCIZIO 14***")
-
-df14 = pd.read_csv(csv_path)
-# 1. Split dei generi
-df14["Genre"] = df14["Genre"].str.split(",")
-# 2. Esplosione delle righe
-df14_new = df14.explode("Genre")
-# 3. Rimuovi spazi
-df14_new["Genre"] = df14_new["Genre"].str.strip()
-# 4. Conversione della durata
-df14_new["Length"] = pd.to_numeric(df14_new["Length"], errors="coerce")
-
-# 5. Calcolo della media
-media= df14_new["Length"].mean()
-print(media)
-
 
 print("******************"+"\n")
 
