@@ -57,32 +57,64 @@ class DataPipeline:
         # ESERCIZIO 1 
         # Task: stampa i tipi del df e le colonne 'Age' ,'Fare', 'Sex' 
         #       delle prime 10 ed ultime 5 righe        
+        print(df.types)
+        print("Le prime 10 righe:")
+        print(df[["Age","Fare","Sex"]].head())
+
+        print("Le ultime 5 righe:")
+        print(df[["Age","Fare","Sex"]].tail())
+
 
         # Sostituisci valori nulli/assenti con NaN
         # ESERCIZIO 2 
-        # Task: sostituire i '?' con numpy NaNs        
+        # Task: sostituire i '?' con numpy NaNs  
+        df.replace("?",pd.NA,inplace=True)
         
         # Limita gli outliers
         # ESERCIZIO 3 
         # Task: stabilisci una soglia max di età ('Age') a cui riportare gli outliers (soglia_max=80)
+           
+        df["Age"]=pd.to_numeric(df["Age"], errors="coerce")
+        df["Age"]=df["Age"].clip(upper=80)
+
 
         # Sostituisci NaNs con il valor medio
         # ESERCIZIO 4
         # Task: applicare la sostituzione con il valor medio alle colonne 'Age' e 'Fare'        
-               
+
+        #trasformazione in numero tutti i dati sulla colonna Age
+        df["Age"]=pd.to_numeric(df["Age"],errors="coerce")   
+
+        # sotituire i Nan con la meida 
+        df["Age"]=df["Age"].fillna(df["Age"].mean()) 
+        # con il replace 
+        df["Age"].replace(pd.NA,df["Age"].mean(), inplace=True)
+        df["Age"].replace(float("nan"),df["Age"].mean(),inplace=True)
+
+
         # Correzione di errori per contenuti standard
         # ESERCIZIO 6 
         # Task: correggere 'mael' con 'male' e 'femael' con 'female' nella colonna 'Sex'        
-        
+        df["Sex"].replace("meal","male",inplace=True)
+        df["Sex"].replace("femael","female",inplece=True)
+         
+        # the secound mithode
+        df["Sex"]=df["Sex"].replace({
+            "mael":"male",
+            "femaele":"female"
+        })
+
+
         # Conversione dei tipi di dato
         # ESERCIZIO 7
         # Task: converti i dati e rend l'età di tipo float 
-       
+        df["Age"]=df["Age"].astype(float)
         # Studia il dataframe - Fase post        
         # ESERCIZIO 8 
         # Task: stampa i tipi del df e le colonne Age' ,'Fare', 'Sex' 
         #       delle prime 10 ed ultime 5 righe, Cosa è cambiato rispetto all'output dell'ESERCIZIO 1?         
-       
+        print(df.dtypes)
+        print(df[["Age","Fare","Sex"]])
         return df
     
     def visualize(self, df: pd.DataFrame) -> None:
